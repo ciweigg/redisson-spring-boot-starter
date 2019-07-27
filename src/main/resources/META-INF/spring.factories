@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.ciwei.redisson.CacheConfiguration, \
+com.ciwei.operation.RedissonObject, \
+com.ciwei.operation.RedissonBinary, \
+com.ciwei.operation.RedissonCollection
