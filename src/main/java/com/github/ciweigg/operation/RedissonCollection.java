@@ -27,21 +27,18 @@ public class RedissonCollection {
 
     /**
      * 获取map集合
-     * @param name
-     * @param <K>
-     * @param <V>
-     * @return
+     * @param name 缓存名
+     * @return RMap
      */
-    public <K,V> RMap<K, V> getMap(String name){
+    public <K,V> RMap <K,V> getMap(String name){
        return redissonClient.getMap(name);
     }
 
     /**
      * 设置map集合
-     * @param name
-     * @param data
+     * @param name 缓存名
+     * @param data 内容
      * @param time 缓存时间,单位毫秒 -1永久缓存
-     * @return
      */
     public void setMapValues(String name, Map data,Long time){
         RMap map = redissonClient.getMap(name);
@@ -51,11 +48,11 @@ public class RedissonCollection {
         }
         map.putAll(data);
     }
+
     /**
      * 设置map集合
-     * @param name
-     * @param data
-     * @return
+     * @param name 缓存名
+     * @param data 内容
      */
     public void setMapValues(String name, Map data){
         setMapValues(name,data,redissonProperties.getDataValidTime());
@@ -63,19 +60,18 @@ public class RedissonCollection {
 
     /**
      * 获取List集合
-     * @param name
-     * @return
+     * @param name 缓存名
+     * @return RList
      */
-    public <T> RList<T> getList(String name){
+    public <T> RList <T> getList(String name){
        return redissonClient.getList(name);
     }
 
     /**
      * 设置List集合
-     * @param name
-     * @param data
+     * @param name 缓存名
+     * @param data 内容
      * @param time 缓存时间,单位毫秒 -1永久缓存
-     * @return
      */
     public void setListValues(String name, List data, Long time){
         RList list = redissonClient.getList(name);
@@ -85,30 +81,30 @@ public class RedissonCollection {
         }
         list.addAll(data);
     }
+
     /**
      * 设置List集合
-     * @param name
-     * @param data
-     * @return
+     * @param name 缓存名
+     * @param data 内容
      */
     public void setListValues(String name, List data){
         setListValues(name,data,redissonProperties.getDataValidTime());
     }
+
     /**
      * 获取set集合
-     * @param name
-     * @return
+     * @param name 缓存名
+     * @return RSet
      */
-    public <T> RSet<T> getSet(String name){
+    public <T> RSet <T> getSet(String name){
        return redissonClient.getSet(name);
     }
 
     /**
      * 设置set集合
-     * @param name
-     * @param data
+     * @param name 缓存名
+     * @param data 内容
      * @param time 缓存时间,单位毫秒 -1永久缓存
-     * @return
      */
     public void setSetValues(String name, Set data, Long time){
         RSet set = redissonClient.getSet(name);
@@ -118,18 +114,14 @@ public class RedissonCollection {
         }
         set.addAll(data);
     }
+
     /**
      * 设置set集合
-     * @param name
-     * @param data
-     * @return
+     * @param name 缓存名
+     * @param data 内容
      */
     public void setSetValues(String name, Set data){
         setSetValues(name,data,redissonProperties.getDataValidTime());
     }
-
-
-
-
 
 }

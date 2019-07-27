@@ -10,6 +10,9 @@ import java.io.OutputStream;
 
 /**
  * 操作对象二进制
+ *
+ * @author Administrator
+ * @version $Id: $Id
  */
 public class RedissonBinary {
 
@@ -18,18 +21,20 @@ public class RedissonBinary {
 
     /**
      * 获取输出流
-     * @param name
-     * @return
+     *
+     * @param name a {@link java.lang.String} object.
+     * @return a {@link java.io.OutputStream} object.
      */
-    public  OutputStream getOutputStream(String name) {
+    public OutputStream getOutputStream(String name) {
         RListMultimap<Object, Object> listMultimap = redissonClient.getListMultimap("");
         RBinaryStream binaryStream = redissonClient.getBinaryStream(name);
         return binaryStream.getOutputStream();
     }
     /**
      * 获取输入流
-     * @param name
-     * @return
+     *
+     * @param name a {@link java.lang.String} object.
+     * @return a {@link java.io.InputStream} object.
      */
     public InputStream getInputStream(String name) {
         RBinaryStream binaryStream = redissonClient.getBinaryStream(name);
@@ -37,8 +42,10 @@ public class RedissonBinary {
     }
     /**
      * 获取输入流
-     * @param name
-     * @return
+     *
+     * @param name a {@link java.lang.String} object.
+     * @param stream a {@link java.io.OutputStream} object.
+     * @return a {@link java.io.InputStream} object.
      */
     public InputStream getValue(String name,OutputStream stream) {
         try {
@@ -58,8 +65,8 @@ public class RedissonBinary {
     /**
      * 获取对象空间
      *
-     * @param name
-     * @return
+     * @param name a {@link java.lang.String} object.
+     * @return a {@link org.redisson.api.RBinaryStream} object.
      */
     public RBinaryStream getBucket(String name) {
         return redissonClient.getBinaryStream(name);
@@ -70,7 +77,6 @@ public class RedissonBinary {
      *
      * @param name  键
      * @param value 值
-     * @return
      */
     public void setValue(String name, InputStream value) {
         try {
@@ -97,6 +103,5 @@ public class RedissonBinary {
         RBinaryStream binaryStream = redissonClient.getBinaryStream(name);
         return binaryStream.delete();
     }
-
 
 }

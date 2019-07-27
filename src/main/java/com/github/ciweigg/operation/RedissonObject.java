@@ -21,9 +21,8 @@ public class RedissonObject {
     /**
      * 获取对象值
      *
-     * @param name
-     * @param <T>
-     * @return
+     * @param name 缓存名
+     * @return T
      */
     public <T> T getValue(String name) {
         RBucket<T> bucket = redissonClient.getBucket(name);
@@ -33,11 +32,10 @@ public class RedissonObject {
     /**
      * 获取对象空间
      *
-     * @param name
-     * @param <T>
-     * @return
+     * @param name 缓存名
+     * @return RBucket
      */
-    public <T> RBucket<T> getBucket(String name) {
+    public <T> RBucket <T> getBucket(String name) {
         return redissonClient.getBucket(name);
     }
 
@@ -46,7 +44,6 @@ public class RedissonObject {
      *
      * @param name  键
      * @param value 值
-     * @return
      */
     public <T> void setValue(String name, T value) {
         setValue(name,value,redissonProperties.getDataValidTime());
@@ -58,7 +55,6 @@ public class RedissonObject {
      * @param name  键
      * @param value 值
      * @param time  缓存时间 单位毫秒 -1 永久缓存
-     * @return
      */
     public <T> void setValue(String name, T value, Long time) {
         RBucket<Object> bucket = redissonClient.getBucket(name);
@@ -108,8 +104,5 @@ public class RedissonObject {
     public Boolean delete(String name) {
         return redissonClient.getBucket(name).delete();
     }
-
-
-
 
 }
