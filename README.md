@@ -39,9 +39,9 @@ private RedissonCollection redissonCollection;
 </dependency>
 ```
 
-1. [properties](readme/properties.md)
+properties的配置：[properties](readme/properties.md)
 
-2. [yml](readme/yml.md)
+yml的配置：[yml](readme/yml.md)
 
 ### 更多参数配置
 
