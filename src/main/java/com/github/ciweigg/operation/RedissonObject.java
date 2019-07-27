@@ -1,6 +1,6 @@
-package com.ciwei.operation;
+package com.github.ciweigg.operation;
 
-import com.ciwei.properties.RedissonProperties;
+import com.github.ciweigg.properties.RedissonProperties;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 

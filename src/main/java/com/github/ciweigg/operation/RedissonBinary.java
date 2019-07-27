@@ -1,4 +1,4 @@
-package com.ciwei.operation;
+package com.github.ciweigg.operation;
 
 import org.redisson.api.RBinaryStream;
 import org.redisson.api.RListMultimap;

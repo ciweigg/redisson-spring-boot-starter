@@ -1,9 +1,9 @@
-package com.ciwei.redisson;
+package com.github.ciweigg.redisson;
 
 import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
-import com.ciwei.properties.RedissonMultipleServerConfig;
-import com.ciwei.properties.RedissonProperties;
-import com.ciwei.properties.RedissonSingleServerConfig;
+import com.github.ciweigg.properties.RedissonMultipleServerConfig;
+import com.github.ciweigg.properties.RedissonProperties;
+import com.github.ciweigg.properties.RedissonSingleServerConfig;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.client.codec.Codec;

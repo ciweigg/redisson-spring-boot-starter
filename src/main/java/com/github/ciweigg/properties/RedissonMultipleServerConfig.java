@@ -1,4 +1,4 @@
-package com.ciwei.properties;
+package com.github.ciweigg.properties;
 
 import lombok.Data;
 import org.redisson.config.ReadMode;
