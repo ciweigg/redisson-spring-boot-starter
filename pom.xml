@@ -8,7 +8,7 @@
         <version>2.1.6.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.ciwei</groupId>
+    <groupId>com.github.ciweigg</groupId>
     <artifactId>redisson-spring-boot-starter</artifactId>
     <version>1.0</version>
     <name>redisson-spring-boot-starter</name>
