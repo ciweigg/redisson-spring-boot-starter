@@ -43,6 +43,13 @@ properties的配置：[properties](readme/properties.md)
 
 yml的配置：[yml](readme/yml.md)
 
+对啦还有个实现呀 可以直接注入redisTemplate 使用了redisson的连接工厂实现集群的
+
+```
+@Autowired
+private RedisTemplate redisTemplate;
+```
+
 ### 更多参数配置
 
 请参考：[参数配置](readme/att)
