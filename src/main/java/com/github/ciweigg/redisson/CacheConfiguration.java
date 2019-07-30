@@ -176,114 +176,115 @@ public class CacheConfiguration {
 			sentinelServersConfig.setTimeout(redissonProperties.getTimeout());
 			return Redisson.create(config);
 		}
-	}
 
-	/**
-	 * 主从模式 redisson 客户端
-	 * @return
-	 */
-	@Bean
-	@ConditionalOnProperty(name = "redisson.mode", havingValue = "masterslave")
-	RedissonClient redissonMasterSlave() {
-		Config config = initConfigs();
-		RedissonMultipleServerConfig multipleServerConfig = redissonProperties.getMultipleServerConfig();
-		MasterSlaveServersConfig masterSlaveServersConfig = config.useMasterSlaveServers();
-		masterSlaveServersConfig.setDatabase(multipleServerConfig.getDatabase());
-		masterSlaveServersConfig.setSlaveConnectionMinimumIdleSize(multipleServerConfig.getSlaveConnectionMinimumIdleSize());
-		masterSlaveServersConfig.setSlaveConnectionPoolSize(multipleServerConfig.getSlaveConnectionPoolSize());
-		masterSlaveServersConfig.setFailedSlaveReconnectionInterval(multipleServerConfig.getFailedSlaveReconnectionInterval());
-		masterSlaveServersConfig.setFailedSlaveCheckInterval(multipleServerConfig.getFailedSlaveCheckInterval());
-		masterSlaveServersConfig.setMasterConnectionMinimumIdleSize(multipleServerConfig.getMasterConnectionMinimumIdleSize());
-		masterSlaveServersConfig.setMasterConnectionPoolSize(multipleServerConfig.getMasterConnectionPoolSize());
-		masterSlaveServersConfig.setReadMode(multipleServerConfig.getReadMode());
-		masterSlaveServersConfig.setSubscriptionMode(multipleServerConfig.getSubscriptionMode());
-		masterSlaveServersConfig.setSubscriptionConnectionMinimumIdleSize(multipleServerConfig.getSubscriptionConnectionMinimumIdleSize());
-		masterSlaveServersConfig.setSubscriptionConnectionPoolSize(multipleServerConfig.getSubscriptionConnectionPoolSize());
-		masterSlaveServersConfig.setDnsMonitoringInterval(multipleServerConfig.getDnsMonitoringInterval());
-		try {
-			masterSlaveServersConfig.setLoadBalancer((LoadBalancer) Class.forName(multipleServerConfig.getLoadBalancer()).newInstance());
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-		int index=0;
-		for (String nodeAddress : multipleServerConfig.getNodeAddresses()) {
-			if(index++==0){
-				masterSlaveServersConfig.setMasterAddress(prefixAddress(nodeAddress));
-			}else{
-				masterSlaveServersConfig.addSlaveAddress(prefixAddress(nodeAddress));
+		/**
+		 * 主从模式 redisson 客户端
+		 * @return
+		 */
+		@Bean
+		@ConditionalOnProperty(name = "redisson.mode", havingValue = "masterslave")
+		RedissonClient redissonMasterSlave() {
+			Config config = initConfigs();
+			RedissonMultipleServerConfig multipleServerConfig = redissonProperties.getMultipleServerConfig();
+			MasterSlaveServersConfig masterSlaveServersConfig = config.useMasterSlaveServers();
+			masterSlaveServersConfig.setDatabase(multipleServerConfig.getDatabase());
+			masterSlaveServersConfig.setSlaveConnectionMinimumIdleSize(multipleServerConfig.getSlaveConnectionMinimumIdleSize());
+			masterSlaveServersConfig.setSlaveConnectionPoolSize(multipleServerConfig.getSlaveConnectionPoolSize());
+			masterSlaveServersConfig.setFailedSlaveReconnectionInterval(multipleServerConfig.getFailedSlaveReconnectionInterval());
+			masterSlaveServersConfig.setFailedSlaveCheckInterval(multipleServerConfig.getFailedSlaveCheckInterval());
+			masterSlaveServersConfig.setMasterConnectionMinimumIdleSize(multipleServerConfig.getMasterConnectionMinimumIdleSize());
+			masterSlaveServersConfig.setMasterConnectionPoolSize(multipleServerConfig.getMasterConnectionPoolSize());
+			masterSlaveServersConfig.setReadMode(multipleServerConfig.getReadMode());
+			masterSlaveServersConfig.setSubscriptionMode(multipleServerConfig.getSubscriptionMode());
+			masterSlaveServersConfig.setSubscriptionConnectionMinimumIdleSize(multipleServerConfig.getSubscriptionConnectionMinimumIdleSize());
+			masterSlaveServersConfig.setSubscriptionConnectionPoolSize(multipleServerConfig.getSubscriptionConnectionPoolSize());
+			masterSlaveServersConfig.setDnsMonitoringInterval(multipleServerConfig.getDnsMonitoringInterval());
+			try {
+				masterSlaveServersConfig.setLoadBalancer((LoadBalancer) Class.forName(multipleServerConfig.getLoadBalancer()).newInstance());
+			} catch (Exception e) {
+				throw new RuntimeException(e);
 			}
+			int index=0;
+			for (String nodeAddress : multipleServerConfig.getNodeAddresses()) {
+				if(index++==0){
+					masterSlaveServersConfig.setMasterAddress(prefixAddress(nodeAddress));
+				}else{
+					masterSlaveServersConfig.addSlaveAddress(prefixAddress(nodeAddress));
+				}
+			}
+			masterSlaveServersConfig.setPingTimeout(redissonProperties.getPingTimeout());
+			masterSlaveServersConfig.setClientName(redissonProperties.getClientName());
+			masterSlaveServersConfig.setConnectTimeout(redissonProperties.getConnectTimeout());
+			masterSlaveServersConfig.setIdleConnectionTimeout(redissonProperties.getIdleConnectionTimeout());
+			masterSlaveServersConfig.setKeepAlive(redissonProperties.getKeepAlive());
+			masterSlaveServersConfig.setPassword(redissonProperties.getPassword());
+			masterSlaveServersConfig.setPingConnectionInterval(redissonProperties.getPingConnectionInterval());
+			masterSlaveServersConfig.setRetryAttempts(redissonProperties.getRetryAttempts());
+			masterSlaveServersConfig.setRetryInterval(redissonProperties.getRetryInterval());
+			masterSlaveServersConfig.setSslEnableEndpointIdentification(redissonProperties.getSslEnableEndpointIdentification());
+			masterSlaveServersConfig.setSslKeystore(redissonProperties.getSslKeystore());
+			masterSlaveServersConfig.setSslKeystorePassword(redissonProperties.getSslKeystorePassword());
+			masterSlaveServersConfig.setSslProvider(redissonProperties.getSslProvider());
+			masterSlaveServersConfig.setSslTruststore(redissonProperties.getSslTruststore());
+			masterSlaveServersConfig.setSslTruststorePassword(redissonProperties.getSslTruststorePassword());
+			masterSlaveServersConfig.setSubscriptionsPerConnection(redissonProperties.getSubscriptionsPerConnection());
+			masterSlaveServersConfig.setTcpNoDelay(redissonProperties.getTcpNoDelay());
+			masterSlaveServersConfig.setTimeout(redissonProperties.getTimeout());
+			return Redisson.create(config);
 		}
-		masterSlaveServersConfig.setPingTimeout(redissonProperties.getPingTimeout());
-		masterSlaveServersConfig.setClientName(redissonProperties.getClientName());
-		masterSlaveServersConfig.setConnectTimeout(redissonProperties.getConnectTimeout());
-		masterSlaveServersConfig.setIdleConnectionTimeout(redissonProperties.getIdleConnectionTimeout());
-		masterSlaveServersConfig.setKeepAlive(redissonProperties.getKeepAlive());
-		masterSlaveServersConfig.setPassword(redissonProperties.getPassword());
-		masterSlaveServersConfig.setPingConnectionInterval(redissonProperties.getPingConnectionInterval());
-		masterSlaveServersConfig.setRetryAttempts(redissonProperties.getRetryAttempts());
-		masterSlaveServersConfig.setRetryInterval(redissonProperties.getRetryInterval());
-		masterSlaveServersConfig.setSslEnableEndpointIdentification(redissonProperties.getSslEnableEndpointIdentification());
-		masterSlaveServersConfig.setSslKeystore(redissonProperties.getSslKeystore());
-		masterSlaveServersConfig.setSslKeystorePassword(redissonProperties.getSslKeystorePassword());
-		masterSlaveServersConfig.setSslProvider(redissonProperties.getSslProvider());
-		masterSlaveServersConfig.setSslTruststore(redissonProperties.getSslTruststore());
-		masterSlaveServersConfig.setSslTruststorePassword(redissonProperties.getSslTruststorePassword());
-		masterSlaveServersConfig.setSubscriptionsPerConnection(redissonProperties.getSubscriptionsPerConnection());
-		masterSlaveServersConfig.setTcpNoDelay(redissonProperties.getTcpNoDelay());
-		masterSlaveServersConfig.setTimeout(redissonProperties.getTimeout());
-		return Redisson.create(config);
-	}
 
-	/**
-	 * 云托管模式 redisson 客户端
-	 * @return
-	 */
-	@Bean
-	@ConditionalOnProperty(name = "redisson.mode", havingValue = "replicated")
-	RedissonClient redissonReplicated() {
-		Config config = initConfigs();
-		RedissonMultipleServerConfig multipleServerConfig = redissonProperties.getMultipleServerConfig();
-		ReplicatedServersConfig replicatedServersConfig = config.useReplicatedServers();
-		replicatedServersConfig.setDatabase(multipleServerConfig.getDatabase());
-		replicatedServersConfig.setScanInterval(multipleServerConfig.getScanInterval());
-		replicatedServersConfig.setSlaveConnectionMinimumIdleSize(multipleServerConfig.getSlaveConnectionMinimumIdleSize());
-		replicatedServersConfig.setSlaveConnectionPoolSize(multipleServerConfig.getSlaveConnectionPoolSize());
-		replicatedServersConfig.setFailedSlaveReconnectionInterval(multipleServerConfig.getFailedSlaveReconnectionInterval());
-		replicatedServersConfig.setFailedSlaveCheckInterval(multipleServerConfig.getFailedSlaveCheckInterval());
-		replicatedServersConfig.setMasterConnectionMinimumIdleSize(multipleServerConfig.getMasterConnectionMinimumIdleSize());
-		replicatedServersConfig.setMasterConnectionPoolSize(multipleServerConfig.getMasterConnectionPoolSize());
-		replicatedServersConfig.setReadMode(multipleServerConfig.getReadMode());
-		replicatedServersConfig.setSubscriptionMode(multipleServerConfig.getSubscriptionMode());
-		replicatedServersConfig.setSubscriptionConnectionMinimumIdleSize(multipleServerConfig.getSubscriptionConnectionMinimumIdleSize());
-		replicatedServersConfig.setSubscriptionConnectionPoolSize(multipleServerConfig.getSubscriptionConnectionPoolSize());
-		replicatedServersConfig.setDnsMonitoringInterval(multipleServerConfig.getDnsMonitoringInterval());
-		try {
-			replicatedServersConfig.setLoadBalancer((LoadBalancer) Class.forName(multipleServerConfig.getLoadBalancer()).newInstance());
-		} catch (Exception e) {
-			throw new RuntimeException(e);
+		/**
+		 * 云托管模式 redisson 客户端
+		 * @return
+		 */
+		@Bean
+		@ConditionalOnProperty(name = "redisson.mode", havingValue = "replicated")
+		RedissonClient redissonReplicated() {
+			Config config = initConfigs();
+			RedissonMultipleServerConfig multipleServerConfig = redissonProperties.getMultipleServerConfig();
+			ReplicatedServersConfig replicatedServersConfig = config.useReplicatedServers();
+			replicatedServersConfig.setDatabase(multipleServerConfig.getDatabase());
+			replicatedServersConfig.setScanInterval(multipleServerConfig.getScanInterval());
+			replicatedServersConfig.setSlaveConnectionMinimumIdleSize(multipleServerConfig.getSlaveConnectionMinimumIdleSize());
+			replicatedServersConfig.setSlaveConnectionPoolSize(multipleServerConfig.getSlaveConnectionPoolSize());
+			replicatedServersConfig.setFailedSlaveReconnectionInterval(multipleServerConfig.getFailedSlaveReconnectionInterval());
+			replicatedServersConfig.setFailedSlaveCheckInterval(multipleServerConfig.getFailedSlaveCheckInterval());
+			replicatedServersConfig.setMasterConnectionMinimumIdleSize(multipleServerConfig.getMasterConnectionMinimumIdleSize());
+			replicatedServersConfig.setMasterConnectionPoolSize(multipleServerConfig.getMasterConnectionPoolSize());
+			replicatedServersConfig.setReadMode(multipleServerConfig.getReadMode());
+			replicatedServersConfig.setSubscriptionMode(multipleServerConfig.getSubscriptionMode());
+			replicatedServersConfig.setSubscriptionConnectionMinimumIdleSize(multipleServerConfig.getSubscriptionConnectionMinimumIdleSize());
+			replicatedServersConfig.setSubscriptionConnectionPoolSize(multipleServerConfig.getSubscriptionConnectionPoolSize());
+			replicatedServersConfig.setDnsMonitoringInterval(multipleServerConfig.getDnsMonitoringInterval());
+			try {
+				replicatedServersConfig.setLoadBalancer((LoadBalancer) Class.forName(multipleServerConfig.getLoadBalancer()).newInstance());
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+			for (String nodeAddress : multipleServerConfig.getNodeAddresses()) {
+				replicatedServersConfig.addNodeAddress(prefixAddress(nodeAddress));
+			}
+			replicatedServersConfig.setPingTimeout(redissonProperties.getPingTimeout());
+			replicatedServersConfig.setClientName(redissonProperties.getClientName());
+			replicatedServersConfig.setConnectTimeout(redissonProperties.getConnectTimeout());
+			replicatedServersConfig.setIdleConnectionTimeout(redissonProperties.getIdleConnectionTimeout());
+			replicatedServersConfig.setKeepAlive(redissonProperties.getKeepAlive());
+			replicatedServersConfig.setPassword(redissonProperties.getPassword());
+			replicatedServersConfig.setPingConnectionInterval(redissonProperties.getPingConnectionInterval());
+			replicatedServersConfig.setRetryAttempts(redissonProperties.getRetryAttempts());
+			replicatedServersConfig.setRetryInterval(redissonProperties.getRetryInterval());
+			replicatedServersConfig.setSslEnableEndpointIdentification(redissonProperties.getSslEnableEndpointIdentification());
+			replicatedServersConfig.setSslKeystore(redissonProperties.getSslKeystore());
+			replicatedServersConfig.setSslKeystorePassword(redissonProperties.getSslKeystorePassword());
+			replicatedServersConfig.setSslProvider(redissonProperties.getSslProvider());
+			replicatedServersConfig.setSslTruststore(redissonProperties.getSslTruststore());
+			replicatedServersConfig.setSslTruststorePassword(redissonProperties.getSslTruststorePassword());
+			replicatedServersConfig.setSubscriptionsPerConnection(redissonProperties.getSubscriptionsPerConnection());
+			replicatedServersConfig.setTcpNoDelay(redissonProperties.getTcpNoDelay());
+			replicatedServersConfig.setTimeout(redissonProperties.getTimeout());
+			return Redisson.create(config);
 		}
-		for (String nodeAddress : multipleServerConfig.getNodeAddresses()) {
-			replicatedServersConfig.addNodeAddress(prefixAddress(nodeAddress));
-		}
-		replicatedServersConfig.setPingTimeout(redissonProperties.getPingTimeout());
-		replicatedServersConfig.setClientName(redissonProperties.getClientName());
-		replicatedServersConfig.setConnectTimeout(redissonProperties.getConnectTimeout());
-		replicatedServersConfig.setIdleConnectionTimeout(redissonProperties.getIdleConnectionTimeout());
-		replicatedServersConfig.setKeepAlive(redissonProperties.getKeepAlive());
-		replicatedServersConfig.setPassword(redissonProperties.getPassword());
-		replicatedServersConfig.setPingConnectionInterval(redissonProperties.getPingConnectionInterval());
-		replicatedServersConfig.setRetryAttempts(redissonProperties.getRetryAttempts());
-		replicatedServersConfig.setRetryInterval(redissonProperties.getRetryInterval());
-		replicatedServersConfig.setSslEnableEndpointIdentification(redissonProperties.getSslEnableEndpointIdentification());
-		replicatedServersConfig.setSslKeystore(redissonProperties.getSslKeystore());
-		replicatedServersConfig.setSslKeystorePassword(redissonProperties.getSslKeystorePassword());
-		replicatedServersConfig.setSslProvider(redissonProperties.getSslProvider());
-		replicatedServersConfig.setSslTruststore(redissonProperties.getSslTruststore());
-		replicatedServersConfig.setSslTruststorePassword(redissonProperties.getSslTruststorePassword());
-		replicatedServersConfig.setSubscriptionsPerConnection(redissonProperties.getSubscriptionsPerConnection());
-		replicatedServersConfig.setTcpNoDelay(redissonProperties.getTcpNoDelay());
-		replicatedServersConfig.setTimeout(redissonProperties.getTimeout());
-		return Redisson.create(config);
+
 	}
 
 	public Config initConfigs(){
