@@ -52,4 +52,4 @@ private RedisTemplate redisTemplate;
 
 ### 更多参数配置
 
-请参考：[参数配置](readme/att)
+请参考：[参数配置](readme/attr.md)
